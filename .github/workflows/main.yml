@@ -3,21 +3,23 @@ name: Free RDP
 on:
   workflow_dispatch:
 
-
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
-    - name: Enable RDP
-      run: |
-        net user runneradmin P@ssw0rd123
-        net localgroup administrators runneradmin /add
-        reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-    - name: Download Ngrok
-      run: |
-        curl -L https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -o ngrok.zip
-        tar -xf ngrok.zip
-    - name: Start Ngrok
-      run: |
-        .\ngrok authtoken 38ysHjNRI7UtyE5fzgGJQN3DVh2_ZETYRdfQL5BhQXFzzPQh
-        .\ngrok tcp 3389
+      - name: Enable RDP
+        run: |
+          net user runneradmin P@ssw0rd123
+          net localgroup administrators runneradmin /add
+          reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+      - name: Download Ngrok v3
+        run: |
+          curl -L https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -o ngrok.zip
+          tar -xf ngrok.zip
+
+      - name: Start Ngrok
+        run: |
+          .\ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
+          .\ngrok tcp 3389
