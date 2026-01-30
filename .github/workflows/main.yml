@@ -17,5 +17,5 @@ jobs:
         tar -xf ngrok.zip
     - name: Start Ngrok
       run: |
-        .\ngrok authtoken YOUR_NGROK_TOKEN
+        .\ngrok authtoken 38ysHjNRI7UtyE5fzgGJQN3DVh2_ZETYRdfQL5BhQXFzzPQh
         .\ngrok tcp 3389
